@@ -1,19 +1,47 @@
 version: '3' 
 services:
-  work01:
-    image: ssh-server:ubuntu-22.04 
+  host:
+    image: clustershell:host
     build:
       context: .
-      dockerfile: Dockerfile
-    hostname: work01 
+      dockerfile: HostDockerfile
+    container_name: host
+    volumes: 
+      - ./shared:/app/shared
+    tty: true
+  node1:
+    image: clustershell:node1
+    build: .
+    container_name: node1
+    environment:
+      - NODE=node1
     volumes:
-      - .:/build
-  work02:
-    image: ssh-server:ubuntu-22.04
-    build:
-      context: .
-      dockerfile: Dockerfile
-    hostname: work02
+      - ./shared:/app/shared
+    command: python node.py
+  node2:
+    image: clustershell:node2
+    build: .
+    container_name: node2
+    environment:
+      - NODE=node2
     volumes:
-      - .:/build
-
+      - ./shared:/app/shared
+    command: python node.py
+  node3:
+    image: clustershell:node3
+    build: .
+    container_name: node3
+    environment:
+      - NODE=node3
+    volumes:
+      - ./shared:/app/shared
+    command: python node.py
+  node4:
+    image: clustershell:node4
+    build: .
+    container_name: node4
+    environment:
+      - NODE=node4
+    volumes:
+      - ./shared:/app/shared
+    command: python node.py

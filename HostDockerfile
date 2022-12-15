@@ -1,0 +1,11 @@
+FROM python:3.9.10
+WORKDIR /app
+COPY ./requirements.txt /app
+COPY ./node.py /app
+COPY ./fifo.py /app
+COPY ./clsh.py /app
+COPY ./setup.py /app
+COPY ./hostfile /app
+RUN mkdir shared; pip install -r ./requirements.txt; python -m pip install --upgrade pip; pip install --editable .
+ENV CLSH_HOSTS=node1:node2:node3:node4
+ENV CLSH_HOSTFILE=./hostfile
