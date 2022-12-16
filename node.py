@@ -1,7 +1,5 @@
 import os
-import sys
 from fifo import fifo
-import subprocess
 
 if __name__ == '__main__':
     node = os.getenv('NODE', 'test')

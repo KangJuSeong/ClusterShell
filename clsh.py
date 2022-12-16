@@ -54,8 +54,8 @@ def clsh(h, hostfile, out, cmd):
         async def __anext__(self):
             if self.current < self.stop:
                 ff = fifo(f'./shared/{nodes[self.current]}')
-                ff.send_req(data)
-                res = ff.recv_res()
+                await ff.send_req(data)
+                res = await ff.recv_res()
                 table = Table(show_header=True, header_style="bold red")
                 table.add_column("Node", style="dim", width=12)
                 table.add_column("Result", style="dim")

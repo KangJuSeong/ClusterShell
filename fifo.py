@@ -1,4 +1,5 @@
 import os
+import asyncio
 
 
 class fifo:
@@ -10,7 +11,7 @@ class fifo:
         if not os.path.exists(self.res):
             os.mkfifo(self.res)
     
-    def send_req(self, cmd):
+    async def send_req(self, cmd):
         with open(self.req, 'w') as f:
             f.write(cmd)
 
@@ -23,7 +24,7 @@ class fifo:
         with open(self.res, 'w') as f:
             f.write(result)
 
-    def recv_res(self):
+    async def recv_res(self):
         with open(self.res, 'r') as f:
             result = f.read()
             return result
