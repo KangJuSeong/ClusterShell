@@ -43,15 +43,35 @@ def clsh(h, hostfile, out, cmd):
         data = data + c + ' '
     data = data[:-1]
     
-    for node in nodes:
-        ff = fifo(f'./shared/{node}')
-        ff.send_req(data)
-        table = Table(show_header=True, header_style="bold red")
-        table.add_column("Node", style="dim", width=12)
-        table.add_column("Result", style="dim")
-        res = ff.recv_res()
-        table.add_row(node, res)
-        if out:
-            with open(f"{out}/{node}.out", 'w') as f:
-                f.write(res)
-        print(table)
+    class async_fifo:
+        def __init__(self, nodes_size):
+            self.current = 0;
+            self.stop = nodes_size
+
+        def __aiter__(self):
+            return self
+        
+        async def __anext__(self):
+            if self.current < self.stop:
+                ff = fifo(f'./shared/{nodes[self.current]}')
+                ff.send_req(data)
+                res = ff.recv_res()
+                table = Table(show_header=True, header_style="bold red")
+                table.add_column("Node", style="dim", width=12)
+                table.add_column("Result", style="dim")
+                table.add_row(nodes[self.current], res)
+                if out:
+                    with open(f"{out}/{nodes[self.current]}.out", 'w') as f:
+                        f.write(res)
+                print(table)
+                self.current += 1
+            else:
+                raise StopAsyncIteration
+
+    async def async_iter():
+        async for i in async_fifo(len(nodes)):
+            continue
+        
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(async_iter())
+    loop.close()
