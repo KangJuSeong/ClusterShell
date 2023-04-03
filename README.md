@@ -36,28 +36,28 @@
 ![](./readme_img/clsh_2.png)
 
 ### Execute
-- `clsh -h node1 cat /proc/loadavg` -> node1에 명령어 실행해보기
+- `clsh -h node1 cat /proc/loadavg` -> node1에 명령어 실행   
 ![](./readme_img/clsh_3.png)
-- `clsh -h node1,node2,node3,node4 cat /proc/loadavg` -> 네개의 node에 명령어 실행해보
-![](./readme_img/clsh_4png)
+- `clsh -h node1,node2,node3,node4 cat /proc/loadavg` -> 네개의 node에 명령어 실행   
+![](./readme_img/clsh_4.png)
 
 ### Method
-- `clsh --hostfile ./hostfile cat /proc/loadavg` -> 해당 명령어를 통해 hostfile에 있는 node로 명령어 실행해보기
-![](./readme_img/clsh_5.png)
-- 다른 호스트파일인 test 파일을 넣어서 재실행 -> test 에는 node1 과 node3 만 존재
-![](./readme_img/clsh_6.png)
-- —hostfile 이 생략되고 환경변수 CLSH_HOSTS 가 존재할 때
-![](./readme_img/clsh_7.png)
-![](./readme_img/clsh_8.png)
-- —hostfile 이 생략되고 환경변수 CLSH_HOSTFILE 이 존재할 때
-![](./readme_img/clsh_9.png)
-![](./readme_img/clsh_10.png)
-- 환경변수가 모두 존재하지 않을 때
-![](./readme_img/clsh_11.png)
-- 환경변수와 호스트파일 모두 존재하지 않을 때
-![](./readme_img/clsh_12.png)
+- `clsh --hostfile ./hostfile cat /proc/loadavg` -> 해당 명령어를 통해 hostfile에 있는 node로 명령어 실행   
+![](./readme_img/clsh_5.png)   
+- 다른 호스트파일인 test 파일을 넣어서 재실행 -> test 에는 node1 과 node3 만 존재   
+![](./readme_img/clsh_6.png)   
+- —hostfile 이 생략되고 환경변수 CLSH_HOSTS 가 존재할 때   
+![](./readme_img/clsh_7.png)   
+![](./readme_img/clsh_8.png)   
+- —hostfile 이 생략되고 환경변수 CLSH_HOSTFILE 이 존재할 때   
+![](./readme_img/clsh_9.png)   
+![](./readme_img/clsh_10.png)   
+- 환경변수가 모두 존재하지 않을 때   
+![](./readme_img/clsh_11.png)   
+- 환경변수와 호스트파일 모두 존재하지 않을 때   
+![](./readme_img/clsh_12.png)   
 
-- `clsh —out /app -h node1 cat /proc/loadavg` -> /app 디렉토리에 node1.out 파일을 생성하고 해당 파일에 결과 입력
-![](./readme_img/clsh_13.png)
-![](./readme_img/clsh_14.png)
+- `clsh —out /app -h node1 cat /proc/loadavg` -> /app 디렉토리에 node1.out 파일을 생성하고 해당 파일에 결과 입력   
+![](./readme_img/clsh_13.png)   
+![](./readme_img/clsh_14.png)   
 -> 네개의 노드 모두 출력 파일 생성
