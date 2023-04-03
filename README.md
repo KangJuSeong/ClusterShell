@@ -27,44 +27,37 @@
 	- —out 옵션이 주어지지 않았을 때는 위 작업이 이루어지면 안되기 때문에 이때는 명령에 대한 결과를 명령을 수행했던 node에서 콘솔로 출력하게 됩니다.
 
 ## CLSH 결과
-### 설치하기
+### Install
 - Docker를 이용하여 host와 node를 구현하였으므로 docker-compose를 이용하여 build 해야 합니다.
 - `docker-compose up --d --build` -> node1, node2, node3, nod4, host 컨테이너 모두 실행
 - `docker ps` -> 위 다섯개 컨테이너가 출력되면 준비가 끝났습니다.
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/35BDA21D-BD3F-4DC9-8835-8BC9886157D6.png)
+![](./readme_img/clash_1.png)
 - `docker exec -it host /bin/bash` -> 클러스터쉘을 이용하기 위한 host 컨테이너에 들어갑니다.
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/79C0AF08-F9B6-4CE4-8C41-0CB0D3548911.png)
+![](./readme_img/clash_2.png)
 
-### 시작하기
+### Execute
 - `clsh -h node1 cat /proc/loadavg` -> node1에 명령어 실행해보기
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/69F9EC82-3C8C-4380-B0C7-F19736B525F4.png)
+![](./readme_img/clash_3.png)
 - `clsh -h node1,node2,node3,node4 cat /proc/loadavg` -> 네개의 node에 명령어 실행해보
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/464276BD-84DF-45B8-BA5A-76DBC239A8D0.png)
+![](./readme_img/clash_4png)
 
-### 사용 방법
-- `cash --hostfile ./hostfile cat /proc/loadavg` -> 해당 명령어를 통해 hostfile에 있는 node로 명령어 실행해보기
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/E5641B40-42D0-428D-AE15-0F79BCE30F1D.png)
+### Method
+- `clsh --hostfile ./hostfile cat /proc/loadavg` -> 해당 명령어를 통해 hostfile에 있는 node로 명령어 실행해보기
+![](./readme_img/clash_5.png)
 - 다른 호스트파일인 test 파일을 넣어서 재실행 -> test 에는 node1 과 node3 만 존재
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/991B8DA6-6FE7-4E74-933E-645E5A8520BA.png)
+![](./readme_img/clash_6.png)
 - —hostfile 이 생략되고 환경변수 CLSH_HOSTS 가 존재할 때
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/837E0E82-D490-4246-898A-CBB6F67A1D18.png)
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/724342A4-C662-4F74-96A3-94BABD2C98D1.png)
+![](./readme_img/clash_7.png)
+![](./readme_img/clash_8.png)
 - —hostfile 이 생략되고 환경변수 CLSH_HOSTFILE 이 존재할 때
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/6D5A1238-1959-4CF5-91F5-E749ACF4B286.png)
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/35C8B0CC-2ACA-419E-96EA-34A3BFD35CEA.png)
+![](./readme_img/clash_9.png)
+![](./readme_img/clash_10.png)
 - 환경변수가 모두 존재하지 않을 때
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/8B99BA80-7B2C-4218-9273-DF507CE2F4F4.png)
+![](./readme_img/clash_11.png)
 - 환경변수와 호스트파일 모두 존재하지 않을 때
+![](./readme_img/clash_12.png)
 
 - `clsh —out /app -h node1 cat /proc/loadavg` -> /app 디렉토리에 node1.out 파일을 생성하고 해당 파일에 결과 입력
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/1C929C47-9C28-48C9-8F58-B2AACA72A584.png)
-![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/29E69046-BD91-4AEF-84F5-B36036A1E30B.png)
+![](./readme_img/clash_13.png)
+![](./readme_img/clash_14.png)
 -> 네개의 노드 모두 출력 파일 생성
-
-
-
-
-
-
-
-
