@@ -6,7 +6,7 @@
 	- —hostfile 옵션이 없을 경우 기존에 컨테이너를 빌드하면서 작성했던 환경변수 CLSH_ HOSTS와 CLSH_ HOSTFILE 의 값을 가져오게 됩니다.
 	- 위에 해당하는 환경변수가 없을 경우 현재 작업 디렉토리에서 hostfile을 찾아서 가져오게 됩니다.
 	- 환경변수와 hostfile 모두 존재하지 않으면 종료됩니다.
-- 옵션 3
+- 옵션 2
 	- —out 으로 경로가 들어왔을 때 경로에 해당 node.out 파일을 생성하고 표준 입출력을 해당 파일로 연결하여 출력 결과를 작성합니다.
 
 ## CLSH 구현
@@ -38,7 +38,7 @@
 ### 시작하기
 - `clsh -h node1 cat /proc/loadavg` -> node1에 명령어 실행해보기
 ![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/69F9EC82-3C8C-4380-B0C7-F19736B525F4.png)
-- `cash -h node1,node2,node3,node4 cat /proc/loadavg` -> 네개의 node에 명령어 실행해보
+- `clsh -h node1,node2,node3,node4 cat /proc/loadavg` -> 네개의 node에 명령어 실행해보
 ![](CLSH%20%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%20%E1%84%87%E1%85%A9%E1%84%80%E1%85%A9%E1%84%89%E1%85%A5/464276BD-84DF-45B8-BA5A-76DBC239A8D0.png)
 
 ### 사용 방법
