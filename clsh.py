@@ -42,36 +42,28 @@ def clsh(h, hostfile, out, cmd):
     for c in cmd:
         data = data + c + ' '
     data = data[:-1]
-    
-    class async_fifo:
-        def __init__(self, nodes_size):
-            self.current = 0;
-            self.stop = nodes_size
 
-        def __aiter__(self):
-            return self
-        
-        async def __anext__(self):
-            if self.current < self.stop:
-                ff = fifo(f'./shared/{nodes[self.current]}')
-                await ff.send_req(data)
-                res = await ff.recv_res()
-                table = Table(show_header=True, header_style="bold red")
-                table.add_column("Node", style="dim", width=12)
-                table.add_column("Result", style="dim")
-                table.add_row(nodes[self.current], res)
-                if out:
-                    with open(f"{out}/{nodes[self.current]}.out", 'w') as f:
-                        f.write(res)
-                print(table)
-                self.current += 1
-            else:
-                raise StopAsyncIteration
+    async def run_host(current):
+        ff = fifo(f'./shared/{nodes[current]}')
+        await ff.send_req(data)
+        res = await ff.recv_res()
+        table = Table(show_header=True, header_style="bold red")
+        table.add_column("Node", style="dim", width=12)
+        table.add_column("Result", style="dim")
+        table.add_row(nodes[current], res)
+        if out:
+            with open(f"{out}/{nodes[current]}.out", 'w') as f:
+                f.write(res)
+        print(table)
 
-    async def async_iter():
-        async for i in async_fifo(len(nodes)):
-            continue
-        
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(async_iter())
-    loop.close()
+    async def main():
+        task_list = list()
+        for i in range(len(nodes)):
+            task_list.append(
+                asyncio.create_task(
+                    run_host(i))
+            )
+        for task in task_list:
+            await task
+
+    asyncio.run(main())

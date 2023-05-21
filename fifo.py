@@ -1,5 +1,5 @@
 import os
-import asyncio
+import aiofiles
 
 
 class fifo:
@@ -12,20 +12,23 @@ class fifo:
             os.mkfifo(self.res)
     
     async def send_req(self, cmd):
-        with open(self.req, 'w') as f:
-            f.write(cmd)
+        f = await aiofiles.open(self.req, 'w')
+        await f.write(cmd)
+        await f.close()
 
-    def recv_req(self):
-        with open(self.req, 'r') as f:
-            data = f.read()
-            return data
+    async def recv_req(self):
+        f = await aiofiles.open(self.req, 'r')
+        data = await f.read()
+        await f.close()
+        return data
 
-    def send_res(self, result):
-        with open(self.res, 'w') as f:
-            f.write(result)
+    async def send_res(self, result):
+        f = await aiofiles.open(self.res, 'w')
+        await f.write(result)
+        await f.close()
 
     async def recv_res(self):
-        with open(self.res, 'r') as f:
-            result = f.read()
-            return result
-        
+        f = await aiofiles.open(self.res, 'r')
+        result = await f.read()
+        await f.close()
+        return result
